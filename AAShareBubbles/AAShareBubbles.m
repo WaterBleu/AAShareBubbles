@@ -299,17 +299,13 @@
     [circle addSubview:iconView];
     
     [button setBackgroundImage:[self imageWithView:circle] forState:UIControlStateNormal];
+    [button setTitle:label forState:UIControlStateNormal];
+    button.titleEdgeInsets = UIEdgeInsetsMake(2 * self.bubbleRadius + 20, 0, 0, 0);
     
     [bubbles addObject:button];
     bubbleIndexTypes[@(bubbles.count - 1)] = @(buttonId);
     
     [self addSubview:button];
-    UILabel *bubbleLabel = [[UILabel alloc] init];
-    bubbleLabel.text = label;
-    CGRect labelFrame = bubbleLabel.frame;
-    labelFrame.origin.y = button.frame.size.height + 2;
-    bubbleLabel.frame = labelFrame;
-    
 }
 
 -(void)createButtonWithIcon:(NSString *)iconName backgroundColor:(int)rgb andType:(AAShareBubbleType)type
