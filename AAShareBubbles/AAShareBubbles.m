@@ -301,7 +301,8 @@
     [button setBackgroundImage:[self imageWithView:circle] forState:UIControlStateNormal];
     [button setTitle:label forState:UIControlStateNormal];
     button.titleLabel.numberOfLines = 0;
-    CGSize labelSize = [button.titleLabel.text sizeWithFont:button.titleLabel.font];
+    [button.titleLabel sizeToFit];
+    CGSize labelSize = button.titleLabel.frame.size;
     
     button.titleEdgeInsets = UIEdgeInsetsMake(2 * self.bubbleRadius + 20 + labelSize.width/4, 0, 0, 0);
     
