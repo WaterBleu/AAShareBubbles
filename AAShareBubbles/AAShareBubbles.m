@@ -300,6 +300,8 @@
     
     [button setBackgroundImage:[self imageWithView:circle] forState:UIControlStateNormal];
     [button setTitle:label forState:UIControlStateNormal];
+    [button.titleLabel sizeToFit];
+    
     button.titleEdgeInsets = UIEdgeInsetsMake(2 * self.bubbleRadius + 20, 0, 0, 0);
     
     [bubbles addObject:button];
