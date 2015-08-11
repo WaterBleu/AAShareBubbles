@@ -13,6 +13,7 @@
 @property int customId;
 @property (strong, nonatomic) UIImage *icon;
 @property (strong, nonatomic) UIColor *backgroundColor;
+@property (strong, nonatomic) NSString *label;
 @end
 
 @implementation AACustomShareBubble
@@ -130,7 +131,7 @@
         
         for (AACustomShareBubble *customBubble in self.customButtons)
         {
-            [self createButtonWithIcon:customBubble.icon backgroundColor:customBubble.backgroundColor andButtonId:customBubble.customId];
+            [self createButtonWithIcon:customBubble.icon Label:customBubble.label andBackgroundColor:customBubble.backgroundColor andButtonId:customBubble.customId];
         }
         
         if(bubbles.count == 0) return;
@@ -275,6 +276,42 @@
     [self addSubview:button];
 }
 
+-(void)createButtonWithIcon:(UIImage *)icon Label:(NSString*)label andBackgroundColor:(UIColor *)color andButtonId:(int)buttonId
+{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(buttonWasTapped:) forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 2 * self.bubbleRadius, 2 * self.bubbleRadius);
+    
+    // Circle background
+    UIView *circle = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2 * self.bubbleRadius, 2 * self.bubbleRadius)];
+    circle.backgroundColor = color;
+    circle.layer.cornerRadius = self.bubbleRadius;
+    circle.layer.masksToBounds = YES;
+    circle.opaque = NO;
+    circle.alpha = 0.97;
+    
+    // Circle icon
+    UIImageView *iconView = [[UIImageView alloc] initWithImage:icon];
+    CGRect f = iconView.frame;
+    f.origin.x = (CGFloat) ((circle.frame.size.width - f.size.width) * 0.5);
+    f.origin.y = (CGFloat) ((circle.frame.size.height - f.size.height) * 0.5);
+    iconView.frame = f;
+    [circle addSubview:iconView];
+    
+    [button setBackgroundImage:[self imageWithView:circle] forState:UIControlStateNormal];
+    
+    [bubbles addObject:button];
+    bubbleIndexTypes[@(bubbles.count - 1)] = @(buttonId);
+    
+    [self addSubview:button];
+    UILabel *bubbleLabel = [[UILabel alloc] init];
+    bubbleLabel.text = label;
+    CGRect labelFrame = bubbleLabel.frame;
+    labelFrame.origin.y = button.frame.size.height + 2;
+    bubbleLabel.frame = labelFrame;
+    
+}
+
 -(void)createButtonWithIcon:(NSString *)iconName backgroundColor:(int)rgb andType:(AAShareBubbleType)type
 {
     UIImage *icon = [UIImage imageNamed:[NSString stringWithFormat:@"AAShareBubbles.bundle/%@", iconName]];
@@ -290,6 +327,18 @@
     customButton.backgroundColor = color;
     customButton.icon = icon;
     customButton.customId = buttonId;
+    [self.customButtons addObject:customButton];
+}
+
+-(void)addCustomButtonWithIcon:(UIImage *)icon Label:(NSString*)label andBackgroundColor:(UIColor *)color andButtonId:(int)buttonId
+{
+    NSAssert(buttonId >= 100, @"Custom Button Ids must be >= 100");
+    
+    AACustomShareBubble *customButton = [[AACustomShareBubble alloc] init];
+    customButton.backgroundColor = color;
+    customButton.icon = icon;
+    customButton.customId = buttonId;
+    customButton.label = label;
     [self.customButtons addObject:customButton];
 }
 
