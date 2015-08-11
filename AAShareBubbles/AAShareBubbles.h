@@ -90,7 +90,7 @@ typedef enum AAShareBubbleType : int {
 -(void)hide;
 
 -(void)addCustomButtonWithIcon:(UIImage *)icon backgroundColor:(UIColor *)color andButtonId:(int)buttonId;
--(void)createButtonWithIcon:(UIImage *)icon Label:(NSString*)label andBackgroundColor:(UIColor *)color andButtonId:(int)buttonId;
+-(void)addCustomButtonWithIcon:(UIImage *)icon Label:(NSString*)label andBackgroundColor:(UIColor *)color andButtonId:(int)buttonId;
 
 @end
 
