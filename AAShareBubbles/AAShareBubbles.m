@@ -45,7 +45,7 @@
         self.radius = radiusValue;
         self.bubbleRadius = 40;
         self.parentView = inView;
-        self.faderAlpha = 0.15;
+        self.faderAlpha = 0.7;
         self.faderColor = [UIColor blackColor];
         
         self.facebookBackgroundColorRGB = 0x3c5a9a;
